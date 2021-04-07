@@ -28,7 +28,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void prepend(Polygon data_)
+    public void prepend(SemiCircle data_)
     {
         // Reset current pointer
         currentToHead();
@@ -51,7 +51,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the end of the list
      */
-    public void append(Polygon data_)
+    public void append(SemiCircle data_)
     {
         // Reset current pointer
         currentToHead();
@@ -74,7 +74,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the list before the current
      */
-    public void insert(Polygon data_)
+    public void insert(SemiCircle data_)
     {
         // Create new node with the specified data
         Node temp = new Node(data_);
@@ -94,7 +94,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void insertInOrder(Polygon data_)
+    public void insertInOrder(SemiCircle data_)
     {
         // Reset the current of the List
         currentToHead();
@@ -106,7 +106,7 @@ public class MyPolygons
         else
         {
             // Create a temporary polygon in order to check the correct position using the ComesBefore method
-            Polygon temp = data_;
+            SemiCircle temp = data_;
             // Loop through from the start of the list, checking each polygon against the temporary one
             while (temp.comesBefore(current.getData()))
             {
@@ -133,7 +133,7 @@ public class MyPolygons
      * Precondition: List cannot be empty. Call hasNext first to check
      * Postcondition: Data of the current node is returned
      */
-    public Polygon next()
+    public SemiCircle next()
     {
         // Step to the next item in the list
         current = current.getNext();
@@ -182,7 +182,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: The first node is removed from the list and the data returned
      */
-    public Polygon removeFromHead()
+    public SemiCircle removeFromHead()
     {
         // Reset current pointer
         currentToHead();
@@ -190,7 +190,7 @@ public class MyPolygons
         if (size > 0)
         {
             // Create a temporary variable to save the data
-            Polygon temp = current.getData();
+            SemiCircle temp = current.getData();
             // Link the sentinel to the second item in the list
             current.getNext().setPrev(sentinel);
             sentinel.setNext(current.getNext());
@@ -235,7 +235,7 @@ public class MyPolygons
         // Loop through every node in the list, and add the toString conversion of it to returnData
         for (int i = 0; i < getSize(); i++)
         {
-            Polygon temp = removeFromHead();
+            SemiCircle temp = removeFromHead();
             returnData += temp.toString() + "\n";
             append(temp);
         }

@@ -75,7 +75,7 @@ public class PA1
         for (int i = 0; i < listSize; i++)
         {
             // Get the next polygon in the list and add into sortedPolygons in order
-            Polygon temp = myPolygonsList.next();
+            SemiCircle temp = myPolygonsList.next();
             sortedPolygons.insertInOrder(temp);
         }
 
@@ -116,7 +116,7 @@ public class PA1
         }
         while (!text.toLowerCase().startsWith("p"));
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
-        myPolygonsList.append(new Polygon());
+        myPolygonsList.append(new SemiCircle());
         // Return the remaining string
         return text;
     }
