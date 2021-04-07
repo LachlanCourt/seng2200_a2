@@ -32,7 +32,7 @@ public abstract class PlanarShape implements Comparable<PlanarShape>
      * Precondition: Points array should not be empty (Otherwise area will be 0)
      * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
      */
-    public abstract void area();
+    public abstract double area();
 
     /**
      * Outputs the Polygon as a string
@@ -49,11 +49,12 @@ public abstract class PlanarShape implements Comparable<PlanarShape>
      * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
      *                <Point closest to the origin> to the origin
      */
-    public abstract void originDistance();
+    public abstract double originDistance();
 
-    public abstract boolean comesBefore(Object o);
+    public abstract boolean comesBefore(PlanarShape o);
 
-    public int CompareTo(PlanarShape s)
+    @Override
+    public int compareTo(PlanarShape s)
     {
         if (this.comesBefore(s))
         {

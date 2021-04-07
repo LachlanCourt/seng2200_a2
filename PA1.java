@@ -116,7 +116,7 @@ public class PA1
         }
         while (!text.toLowerCase().startsWith("p"));
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
-        myPolygonsList.append(new Polygon(polygonString));
+        myPolygonsList.append(new Polygon());
         // Return the remaining string
         return text;
     }
