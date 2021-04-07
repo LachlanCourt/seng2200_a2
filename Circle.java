@@ -26,7 +26,7 @@ public class Circle extends PlanarShape
         centre = centre_;
     }
 
-    private void setRadius(double radius_)
+    public void setRadius(double radius_)
     {
         radius = radius_;
     }
