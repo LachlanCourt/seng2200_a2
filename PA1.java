@@ -75,7 +75,7 @@ public class PA1
         for (int i = 0; i < listSize; i++)
         {
             // Get the next polygon in the list and add into sortedPolygons in order
-            SemiCircle temp = myPolygonsList.next();
+            Polygon temp = myPolygonsList.next();
             sortedPolygons.insertInOrder(temp);
         }
 
@@ -116,7 +116,7 @@ public class PA1
         }
         while (!text.toLowerCase().startsWith("p"));
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
-        myPolygonsList.append(new SemiCircle());
+        myPolygonsList.append(new Polygon());
         // Return the remaining string
         return text;
     }
@@ -143,7 +143,7 @@ public class PA1
             return null;
         }
 
-        //Each line of text will be stored here as it is read so that it can be interpretted in run
+        //Each line of text will be stored here as it is read so that it can be interpreted in run
         String textLine = "";
 
         //Loop while there is still information to read from the text file

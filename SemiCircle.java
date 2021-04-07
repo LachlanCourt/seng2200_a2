@@ -7,16 +7,43 @@
  ****    Points and it's area
  *******************************************************************************/
 
+import java.lang.Math;
+
 // An implementation of the ComparePoly function that includes functionality for non-standard Polygons
 public class SemiCircle extends PlanarShape
 {
     // Instance variables
-    private Point[] points;
-    private int pointsSize;
+    private Point centre;
+    private Point pointOnLine;
+    private Point leftOfCentre;
+    private Point rightOfCentre;
 
     // Default Constructor
     public SemiCircle()
     {
+    }
+
+    public void setPoints(Point centre_, Point pointOnLine_)
+    {
+        centre = centre_;
+        pointOnLine = pointOnLine_;
+
+        leftOfCentre = new Point(centre.getX() - abs(centre.getY() - pointOnLine.getY()), centre.getY() + abs(centre.getX() - pointOnLine.getX()));
+        rightOfCentre = new Point(centre.getX() + abs(centre.getY() - pointOnLine.getY()), centre.getY() - abs(centre.getX() - pointOnLine.getX()));
+    }
+
+    private double getRadius()
+    {
+        return Math.sqrt((Math.pow(pointOnLine.getY() - centre.getY(), 2)) + (Math.pow(pointOnLine.getX() - centre.getX(), 2)));
+    }
+
+    private double abs(double a)
+    {
+        if (a < 0)
+        {
+            return a * -1;
+        }
+        return a;
     }
 
     /**
@@ -26,18 +53,31 @@ public class SemiCircle extends PlanarShape
      */
     public double area()
     {
-       return 1;
+        return Math.PI*Math.pow(this.getRadius(), 2)/2;
     }
 
     /**
      * Calculates the distance from the origin of the point closest to the origin
      * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
+     * Postcondition: leastDistance variable will hold the value of the Euclidean distance from the
      *                <Point closest to the origin> to the origin
      */
     public double originDistance()
     {
-        return 1;
+        double distance = centre.calcDistance();
+        if (pointOnLine.calcDistance() < distance)
+        {
+            distance = pointOnLine.calcDistance();
+        }
+        if (leftOfCentre.calcDistance() < distance)
+        {
+            distance = leftOfCentre.calcDistance();
+        }
+        if (rightOfCentre.calcDistance() < distance)
+        {
+            distance = rightOfCentre.calcDistance();
+        }
+        return distance;
     }
 
     /**
@@ -49,7 +89,7 @@ public class SemiCircle extends PlanarShape
     @Override
     public String toString()
     {
-        return " ";
+        return "SEMI=[" + centre.toString() + " " + pointOnLine.toString() + "]:    " + String.format("%5.2f", this.area());
     }
 
     /**
