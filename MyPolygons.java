@@ -94,7 +94,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void insertInOrder(Polygon data_)
+    public void insertInOrder(PlanarShape data_)
     {
         // Reset the current of the List
         currentToHead();

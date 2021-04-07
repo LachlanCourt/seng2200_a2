@@ -143,7 +143,7 @@ public class PA1
             return null;
         }
 
-        //Each line of text will be stored here as it is read so that it can be interpretted in run
+        //Each line of text will be stored here as it is read so that it can be interpreted in run
         String textLine = "";
 
         //Loop while there is still information to read from the text file

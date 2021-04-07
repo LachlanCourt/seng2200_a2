@@ -7,16 +7,28 @@
  ****    Points and it's area
  *******************************************************************************/
 
+import java.lang.Math;
+
 // An implementation of the ComparePoly function that includes functionality for non-standard Polygons
-public class Polygon extends PlanarShape
+public class Circle extends PlanarShape
 {
     // Instance variables
-    private Point[] points;
-    private int pointsSize;
+    private Point centre;
+    private double radius;
 
     // Default Constructor
-    public Polygon()
+    public Circle()
     {
+    }
+
+    public void setCentre(Point centre_)
+    {
+        centre = centre_;
+    }
+
+    private void setRadius(double radius_)
+    {
+        radius = radius_;
     }
 
     /**
@@ -26,42 +38,18 @@ public class Polygon extends PlanarShape
      */
     public double area()
     {
-        // Initialise area variable as 0
-        double area = 0;
-        // Loop through each Point and apply the formula to increase the area variable
-        for (int i = 0; i < pointsSize; i++)
-        {
-            area += (points[i].getX() + points[i + 1].getX()) * (points[i + 1].getY() - points[i].getY());
-        }
-        // Convert to absolute value
-        if (area < 0)
-        {
-            area *= -1;
-        }
-        // Complete the formula. area is a global variable so no need to return
-        return area / 2;
+        return Math.PI*Math.pow(this.radius, 2);
     }
 
     /**
      * Calculates the distance from the origin of the point closest to the origin
      * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
+     * Postcondition: leastDistance variable will hold the value of the Euclidean distance from the
      *                <Point closest to the origin> to the origin
      */
     public double originDistance()
     {
-        // Assume the point closest to the origin is the first one in the points array
-        double leastDistance = points[0].calcDistance();
-        // Loop through the array to find the point closest to the origin
-        for (int i = 0; i < pointsSize; i++)
-        {
-            // If a lower distance is found, replace the value stored in leastDistance
-            if (points[i].calcDistance() < leastDistance)
-            {
-                leastDistance = points[i].calcDistance();
-            }
-        }
-        return leastDistance;
+        return centre.calcDistance() - radius;
     }
 
     /**
@@ -73,26 +61,7 @@ public class Polygon extends PlanarShape
     @Override
     public String toString()
     {
-        // Initialise the output String
-        String stringPoly = "[";
-
-        /*
-         The last point in the array is the same as the first point, so loop to less than pointsSize so that it is not
-         printed it out
-         */
-        for (int i = 0; i < pointsSize; i++)
-        {
-            // Add each Point to the String
-            stringPoly += " " + points[i].toString();
-        }
-
-        // Close the bracket to indicate the list of Points is complete
-        stringPoly += " ]:    ";
-
-        // Add the area of the Polygon to the end and return
-        stringPoly += String.format("%5.2f", area());
-
-        return stringPoly;
+        return "CIRC=[" + centre.toString() + "]:   " + String.format("%5.2f", this.area());
     }
 
     /**
