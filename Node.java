@@ -6,7 +6,7 @@
 ****    This class is a Node for a Linked List class that stores Polygon objects
  *******************************************************************************/
 
-public class Node
+public class Node<T extends PlanarShape>
 {
     // Instance variables
     private PlanarShape data;

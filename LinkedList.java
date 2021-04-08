@@ -5,7 +5,7 @@
  ****    19/03/2021
  ****    This class is a Linked List that stores Polygon objects
  *******************************************************************************/
-public class LinkedList
+public class LinkedList<T extends PlanarShape>
 {
     // Instance variables
     private Node sentinel ;
