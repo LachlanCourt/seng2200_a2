@@ -5,7 +5,7 @@
  ****    19/03/2021
  ****    This class is a Linked List that stores Polygon objects
  *******************************************************************************/
-public class MyPolygons
+public class LinkedList
 {
     // Instance variables
     private Node sentinel ;
@@ -13,7 +13,7 @@ public class MyPolygons
     private int size;
 
     // Default Constructor
-    public MyPolygons()
+    public LinkedList()
     {
         size = 0;
         sentinel = new Node();
@@ -28,7 +28,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void prepend(Polygon data_)
+    public void prepend(PlanarShape data_)
     {
         // Reset current pointer
         currentToHead();
@@ -51,7 +51,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the end of the list
      */
-    public void append(Polygon data_)
+    public void append(PlanarShape data_)
     {
         // Reset current pointer
         currentToHead();
@@ -74,7 +74,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the list before the current
      */
-    public void insert(Polygon data_)
+    public void insert(PlanarShape data_)
     {
         // Create new node with the specified data
         Node temp = new Node(data_);
@@ -94,8 +94,9 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void insertInOrder(Polygon data_)
+    public void insertInOrder(PlanarShape data_)
     {
+        /*
         // Reset the current of the List
         currentToHead();
         // If the list is empty, add the item to the start of the list
@@ -125,6 +126,8 @@ public class MyPolygons
             // If the loop has ended, the current pointer is in place to insert the new data before it
             insert(data_);
         }
+        (
+         */
     }
 
     /**
@@ -133,7 +136,7 @@ public class MyPolygons
      * Precondition: List cannot be empty. Call hasNext first to check
      * Postcondition: Data of the current node is returned
      */
-    public Polygon next()
+    public PlanarShape next()
     {
         // Step to the next item in the list
         current = current.getNext();
@@ -182,7 +185,7 @@ public class MyPolygons
      * Precondition: None
      * Postcondition: The first node is removed from the list and the data returned
      */
-    public Polygon removeFromHead()
+    public PlanarShape removeFromHead()
     {
         // Reset current pointer
         currentToHead();
@@ -190,7 +193,7 @@ public class MyPolygons
         if (size > 0)
         {
             // Create a temporary variable to save the data
-            Polygon temp = current.getData();
+            PlanarShape temp = current.getData();
             // Link the sentinel to the second item in the list
             current.getNext().setPrev(sentinel);
             sentinel.setNext(current.getNext());
@@ -235,7 +238,7 @@ public class MyPolygons
         // Loop through every node in the list, and add the toString conversion of it to returnData
         for (int i = 0; i < getSize(); i++)
         {
-            Polygon temp = removeFromHead();
+            PlanarShape temp = removeFromHead();
             returnData += temp.toString() + "\n";
             append(temp);
         }

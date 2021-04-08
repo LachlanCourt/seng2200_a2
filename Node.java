@@ -9,7 +9,7 @@
 public class Node
 {
     // Instance variables
-    private SemiCircle data;
+    private PlanarShape data;
     private Node next;
     private Node prev;
 
@@ -20,7 +20,7 @@ public class Node
     }
 
     // Constructor
-    public Node(SemiCircle data_)
+    public Node(PlanarShape data_)
     {
         data = data_;
     }
@@ -28,7 +28,7 @@ public class Node
     /**
      * @return data in Node
      */
-    public SemiCircle getData()
+    public PlanarShape getData()
     {
         return data;
     }
@@ -36,7 +36,7 @@ public class Node
     /**
      * @param data_ takes a Polygon object and stores it in the data variable
      */
-    public void setData(SemiCircle data_)
+    public void setData(PlanarShape data_)
     {
         data = data_;
     }
