@@ -1,3 +1,7 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Consumer;
+
 /*******************************************************************************
  ****    SENG2200 Assignment 1
  ****    c3308061
@@ -5,18 +9,18 @@
  ****    19/03/2021
  ****    This class is a Linked List that stores Polygon objects
  *******************************************************************************/
-public class LinkedList<T extends PlanarShape>
+public class LinkedList<T extends PlanarShape> implements Iterable<T>
 {
     // Instance variables
-    private Node sentinel ;
-    private Node current;
+    private Node<T> sentinel ;
+    private Node<T> current;
     private int size;
 
     // Default Constructor
     public LinkedList()
     {
         size = 0;
-        sentinel = new Node();
+        sentinel = new Node<T>();
         current = sentinel;
         sentinel.setNext(sentinel);
         sentinel.setPrev(sentinel);
@@ -28,12 +32,12 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void prepend(PlanarShape data_)
+    public void prepend(T data_)
     {
         // Reset current pointer
         currentToHead();
         // Create new node with the specified data
-        Node temp = new Node(data_);
+        Node temp = new Node<T>(data_);
         // Set next and previous of the new node
         temp.setNext(current);
         temp.setPrev(sentinel);
@@ -51,12 +55,12 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: None
      * Postcondition: Data is added to the end of the list
      */
-    public void append(PlanarShape data_)
+    public void append(T data_)
     {
         // Reset current pointer
         currentToHead();
         // Create new node with the specified data
-        Node temp = new Node(data_);
+        Node temp = new Node<T>(data_);
         // Set next and previous of the new node
         temp.setNext(sentinel);
         temp.setPrev(sentinel.getPrev());
@@ -74,10 +78,10 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: None
      * Postcondition: Data is added to the list before the current
      */
-    public void insert(PlanarShape data_)
+    public void insert(T data_)
     {
         // Create new node with the specified data
-        Node temp = new Node(data_);
+        Node temp = new Node<T>(data_);
         // Set next and previous of the new node
         temp.setNext(current);
         temp.setPrev(current.getPrev());
@@ -94,7 +98,7 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: None
      * Postcondition: Data is added to the start of the list
      */
-    public void insertInOrder(PlanarShape data_)
+    public void insertInOrder(T data_)
     {
         /*
         // Reset the current of the List
@@ -136,7 +140,7 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: List cannot be empty. Call hasNext first to check
      * Postcondition: Data of the current node is returned
      */
-    public PlanarShape next()
+    public T next()
     {
         // Step to the next item in the list
         current = current.getNext();
@@ -185,7 +189,7 @@ public class LinkedList<T extends PlanarShape>
      * Precondition: None
      * Postcondition: The first node is removed from the list and the data returned
      */
-    public PlanarShape removeFromHead()
+    public T removeFromHead()
     {
         // Reset current pointer
         currentToHead();
@@ -193,7 +197,7 @@ public class LinkedList<T extends PlanarShape>
         if (size > 0)
         {
             // Create a temporary variable to save the data
-            PlanarShape temp = current.getData();
+            T temp = current.getData();
             // Link the sentinel to the second item in the list
             current.getNext().setPrev(sentinel);
             sentinel.setNext(current.getNext());
@@ -238,11 +242,80 @@ public class LinkedList<T extends PlanarShape>
         // Loop through every node in the list, and add the toString conversion of it to returnData
         for (int i = 0; i < getSize(); i++)
         {
-            PlanarShape temp = removeFromHead();
+            T temp = removeFromHead();
             returnData += temp.toString() + "\n";
             append(temp);
         }
         // Return
         return returnData;
+    }
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<T> iterator()
+    {
+        return new myListIterator();
+    }
+
+    class myListIterator implements Iterator<T>
+    {
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext()
+        {
+            return false;
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public T next() throws NoSuchElementException
+        {
+            return null;
+        }
+
+        /**
+         * Performs the given action for each remaining element until all elements
+         * have been processed or the action throws an exception.  Actions are
+         * performed in the order of iteration, if that order is specified.
+         * Exceptions thrown by the action are relayed to the caller.
+         * <p>
+         * The behavior of an iterator is unspecified if the action modifies the
+         * collection in any way (even by calling the {@link #remove remove} method
+         * or other mutator methods of {@code Iterator} subtypes),
+         * unless an overriding class has specified a concurrent modification policy.
+         * <p>
+         * Subsequent behavior of an iterator is unspecified if the action throws an
+         * exception.
+         *
+         * @param action The action to be performed for each element
+         * @throws NullPointerException if the specified action is null
+         * @implSpec <p>The default implementation behaves as if:
+         * <pre>{@code
+         *     while (hasNext())
+         *         action.accept(next());
+         * }</pre>
+         * @since 1.8
+         */
+        @Override
+        public void forEachRemaining(Consumer<? super T> action)
+        {
+
+        }
     }
 }

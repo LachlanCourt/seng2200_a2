@@ -9,7 +9,7 @@
 public class Node<T extends PlanarShape>
 {
     // Instance variables
-    private PlanarShape data;
+    private T data;
     private Node next;
     private Node prev;
 
@@ -20,7 +20,7 @@ public class Node<T extends PlanarShape>
     }
 
     // Constructor
-    public Node(PlanarShape data_)
+    public Node(T data_)
     {
         data = data_;
     }
@@ -28,7 +28,7 @@ public class Node<T extends PlanarShape>
     /**
      * @return data in Node
      */
-    public PlanarShape getData()
+    public T getData()
     {
         return data;
     }
@@ -36,7 +36,7 @@ public class Node<T extends PlanarShape>
     /**
      * @param data_ takes a Polygon object and stores it in the data variable
      */
-    public void setData(PlanarShape data_)
+    public void setData(T data_)
     {
         data = data_;
     }
