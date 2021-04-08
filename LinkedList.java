@@ -12,8 +12,7 @@ import java.util.function.Consumer;
 public class LinkedList<T extends PlanarShape> implements Iterable<T>
 {
     // Instance variables
-    private Node<T> sentinel ;
-    private Node<T> current;
+    private Node<T> sentinel;
     private int size;
 
     // Default Constructor
@@ -21,7 +20,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
         size = 0;
         sentinel = new Node<T>();
-        current = sentinel;
         sentinel.setNext(sentinel);
         sentinel.setPrev(sentinel);
     }
@@ -34,6 +32,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public void prepend(T data_)
     {
+        /*
         // Reset current pointer
         currentToHead();
         // Create new node with the specified data
@@ -46,7 +45,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         sentinel.setNext(temp);
         // Reset the current to be on the new node and increase the size
         currentToHead();
-        size++;
+        size++;*/
     }
 
     /**
@@ -57,8 +56,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public void append(T data_)
     {
-        // Reset current pointer
-        currentToHead();
         // Create new node with the specified data
         Node temp = new Node<T>(data_);
         // Set next and previous of the new node
@@ -67,8 +64,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         // Link the nodes on either side of the new node
         sentinel.getPrev().setNext(temp);
         sentinel.setPrev(temp);
-        // Reset the current to be on the new node and increase the size
-        currentToHead();
         size++;
     }
 
@@ -80,6 +75,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public void insert(T data_)
     {
+        /*
         // Create new node with the specified data
         Node temp = new Node<T>(data_);
         // Set next and previous of the new node
@@ -89,7 +85,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         current.getPrev().setNext(temp);
         current.setPrev(temp);
         // Increase the size
-        size++;
+        size++;*/
     }
 
     /**
@@ -135,55 +131,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     }
 
     /**
-     * Steps the current pointer to the next in the list
-     * @return the data of the new current after the step
-     * Precondition: List cannot be empty. Call hasNext first to check
-     * Postcondition: Data of the current node is returned
-     */
-    public T next()
-    {
-        // Step to the next item in the list
-        current = current.getNext();
-        /*
-         If after the step the current has become the sentinel, the list has reached the end. Step again to be on the
-         current
-         */
-        if (current == sentinel)
-        {
-            currentToHead();
-        }
-
-        // Return the data of the new current
-        return current.getData();
-    }
-
-    /**
-     * Checks if the current pointer is at the end of the list or not
-     * @return boolean true if the current is not at the end of the list
-     * Precondition: None
-     * Postcondition: Returns whether the current is at the end of the list or not
-     */
-    public boolean hasNext()
-    {
-        if (current.getNext() == sentinel)
-        {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Resets the current to the head
-     * Precondition: None
-     * Postcondition: current pointer is the same as the head of the list
-     */
-    public void currentToHead()
-    {
-        current = sentinel.getNext();
-    }
-
-
-    /**
      * Removes the first item from the list and returns the data. Returns null if list is empty
      * @return the data from the removed node
      * Precondition: None
@@ -192,24 +139,21 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     public T removeFromHead()
     {
         // Reset current pointer
-        currentToHead();
+        Node<T> first = sentinel.getNext();
         // Only remove an item if the list is not empty
         if (size > 0)
         {
             // Create a temporary variable to save the data
-            T temp = current.getData();
+            T temp = first.getData();
             // Link the sentinel to the second item in the list
-            current.getNext().setPrev(sentinel);
-            sentinel.setNext(current.getNext());
+            first.getNext().setPrev(sentinel);
+            sentinel.setNext(first.getNext());
             // Unlink the old head
-            current.setNext(null);
-            current.setPrev(null);
-            // Reset the current to set it to the new head
-            currentToHead();
+            first.setNext(null);
+            first.setPrev(null);
             // Decrease the size and return the data
             size--;
             return temp;
-
         }
         // If the list is empty, return null
         else
@@ -217,6 +161,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             return null;
         }
     }
+
 
     /**
      * Returns the size of the Linked List
@@ -237,8 +182,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
         // Declare a string to hold the running contents
         String returnData = "";
-        // Reset the current to the start of the list
-        currentToHead();
         // Loop through every node in the list, and add the toString conversion of it to returnData
         for (int i = 0; i < getSize(); i++)
         {
@@ -264,6 +207,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     class myListIterator implements Iterator<T>
     {
 
+        Node<T> current = sentinel;
         /**
          * Returns {@code true} if the iteration has more elements.
          * (In other words, returns {@code true} if {@link #next} would
@@ -274,7 +218,11 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public boolean hasNext()
         {
-            return false;
+            if (current.getNext() == sentinel)
+            {
+                return false;
+            }
+            return true;
         }
 
         /**
@@ -284,9 +232,26 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
          * @throws NoSuchElementException if the iteration has no more elements
          */
         @Override
-        public T next() throws NoSuchElementException
+        public T next()
         {
-            return null;
+            // Step to the next item in the list
+            current = current.getNext();
+        /*
+         If after the step the current has become the sentinel, the list has reached the end. Step again to be on the
+         current
+         */
+            if (current == sentinel)
+            {
+                reset();
+            }
+
+            // Return the data of the new current
+            return current.getData();
+        }
+
+        public void reset()
+        {
+            current = sentinel.getNext();
         }
 
         /**
