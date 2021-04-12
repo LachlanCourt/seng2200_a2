@@ -34,20 +34,15 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public void prepend(T data_)
     {
-        /*
-        // Reset current pointer
-        currentToHead();
         // Create new node with the specified data
         Node temp = new Node<T>(data_);
         // Set next and previous of the new node
-        temp.setNext(current);
+        temp.setNext(sentinel.getNext());
         temp.setPrev(sentinel);
         // Link the nodes on either side of the new node
-        current.setPrev(temp);
+        sentinel.getNext().setPrev(temp);
         sentinel.setNext(temp);
-        // Reset the current to be on the new node and increase the size
-        currentToHead();
-        size++;*/
+        size++;
     }
 
     /**

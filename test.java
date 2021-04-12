@@ -30,6 +30,7 @@ public class test
             System.out.println(itr.next());
         }
         System.out.println("Break");
+        list.prepend(tempPoly);
         Iterator<PlanarShape> itr2 = list.iterator();
         while (itr2.hasNext())
         {
