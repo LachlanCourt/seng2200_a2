@@ -61,7 +61,7 @@ public class Circle extends PlanarShape
     @Override
     public String toString()
     {
-        return "CIRC=[" + centre.toString() + "]:   " + String.format("%5.2f", this.area());
+        return "CIRC=[" + centre.toString() + " " + radius + "]:   " + String.format("%5.2f", this.area());
     }
 
     /**

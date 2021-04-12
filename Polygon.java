@@ -15,8 +15,18 @@ public class Polygon extends PlanarShape
     private int pointsSize;
 
     // Default Constructor
-    public Polygon()
+    public Polygon(int size_)
     {
+        points = new Point[size_];
+    }
+
+    public void addPoint(Point newPoint, boolean lastPoint)
+    {
+        points[pointsSize] = newPoint;
+        if (!lastPoint)
+        {
+            pointsSize++;
+        }
     }
 
     /**
@@ -46,7 +56,7 @@ public class Polygon extends PlanarShape
      * Calculates the distance from the origin of the point closest to the origin
      * Precondition: points array must have been initialised and cannot be empty
      * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
-     *                <Point closest to the origin> to the origin
+     * <Point closest to the origin> to the origin
      */
     public double originDistance()
     {
@@ -66,6 +76,7 @@ public class Polygon extends PlanarShape
 
     /**
      * Outputs the Polygon as a string
+     *
      * @return a String representation of the Points in the polygon followed by the area
      * Precondition: points should not (but can) be empty. Area should have been calculated otherwise it will be 0
      * Postcondition: A String representation of the Polygon will be returned
@@ -74,7 +85,7 @@ public class Polygon extends PlanarShape
     public String toString()
     {
         // Initialise the output String
-        String stringPoly = "[";
+        String stringPoly = "POLY=[";
 
         /*
          The last point in the array is the same as the first point, so loop to less than pointsSize so that it is not
