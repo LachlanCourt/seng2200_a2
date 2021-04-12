@@ -59,7 +59,7 @@ public class PA2
         Iterator<PlanarShape> itr = unsortedList.iterator();
         while (itr.hasNext())
         {
-            sortedList.append(itr.next());
+            sortedList.insertInOrder(itr.next());
         }
         System.out.println("Sorted List:");
         System.out.println(sortedList.toString());
