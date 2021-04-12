@@ -26,9 +26,10 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Adds data to the start of the list
+     *
      * @param data_ to be added to the Linked List
-     * Precondition: None
-     * Postcondition: Data is added to the start of the list
+     *              Precondition: None
+     *              Postcondition: Data is added to the start of the list
      */
     public void prepend(T data_)
     {
@@ -50,9 +51,10 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Adds data to the end of the list
+     *
      * @param data_ to be added to the Linked List
-     * Precondition: None
-     * Postcondition: Data is added to the end of the list
+     *              Precondition: None
+     *              Postcondition: Data is added to the end of the list
      */
     public void append(T data_)
     {
@@ -69,9 +71,10 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Adds data before the current pointer
+     *
      * @param data_ to be added to the Linked List
-     * Precondition: None
-     * Postcondition: Data is added to the list before the current
+     *              Precondition: None
+     *              Postcondition: Data is added to the list before the current
      */
     public void insert(T data_)
     {
@@ -90,9 +93,10 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Adds data in order according to the CompareBefore method
+     *
      * @param data_ to be added to the Linked List
-     * Precondition: None
-     * Postcondition: Data is added to the start of the list
+     *              Precondition: None
+     *              Postcondition: Data is added to the start of the list
      */
     public void insertInOrder(T data_)
     {
@@ -132,6 +136,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Removes the first item from the list and returns the data. Returns null if list is empty
+     *
      * @return the data from the removed node
      * Precondition: None
      * Postcondition: The first node is removed from the list and the data returned
@@ -139,18 +144,19 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     public T removeFromHead()
     {
         // Reset current pointer
-        Node<T> first = sentinel.getNext();
+
         // Only remove an item if the list is not empty
         if (size > 0)
         {
             // Create a temporary variable to save the data
-            T temp = first.getData();
+            Node<T> tempNode = sentinel.getNext();
+            T temp = tempNode.getData();
             // Link the sentinel to the second item in the list
-            first.getNext().setPrev(sentinel);
-            sentinel.setNext(first.getNext());
+            sentinel.getNext().getNext().setPrev(sentinel);
+            sentinel.setNext(sentinel.getNext().getNext());
             // Unlink the old head
-            first.setNext(null);
-            first.setPrev(null);
+            //first.setNext(null);
+            //first.setPrev(null);
             // Decrease the size and return the data
             size--;
             return temp;
@@ -165,6 +171,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Returns the size of the Linked List
+     *
      * @return the size of the Linked List
      * Preconditions: None
      * Postcondition: Size of the Linked List is returned
@@ -192,7 +199,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         // Return
         return returnData;
     }
-
     /**
      * Returns an iterator over elements of type {@code T}.
      *
@@ -208,6 +214,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
 
         Node<T> current = sentinel;
+
         /**
          * Returns {@code true} if the iteration has more elements.
          * (In other words, returns {@code true} if {@link #next} would
@@ -218,11 +225,23 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public boolean hasNext()
         {
-            if (current.getNext() == sentinel)
+            try
             {
-                return false;
+                if (current.getNext() == sentinel)
+                {
+                    return false;
+                }
+                return true;
             }
-            return true;
+            catch (NullPointerException e)
+            {
+                current = sentinel.getNext();
+                if (current.getNext() == sentinel)
+                {
+                    return false;
+                }
+                return true;
+            }
         }
 
         /**
@@ -234,24 +253,28 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public T next()
         {
-            // Step to the next item in the list
-            current = current.getNext();
-        /*
-         If after the step the current has become the sentinel, the list has reached the end. Step again to be on the
-         current
-         */
-            if (current == sentinel)
+            try
             {
-                reset();
+                // Step to the next item in the list
+                current = current.getNext();
+                /*
+                 If after the step the current has become the sentinel, the list has reached the end. Step again to be on the
+                 current
+                 */
+                /*
+                if (current == sentinel)
+                {
+                    current = sentinel.getNext();
+                }*/
+
+                // Return the data of the new current
+                return current.getData();
             }
-
-            // Return the data of the new current
-            return current.getData();
-        }
-
-        public void reset()
-        {
-            current = sentinel.getNext();
+            catch (NullPointerException e)
+            {
+                current = sentinel.getNext();
+                return current.getData();
+            }
         }
 
         /**
