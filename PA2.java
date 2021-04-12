@@ -178,7 +178,7 @@ public class PA2
                 valuesSize++;
                 if (valuesSize == values.length)
                 {
-                    values = resizeArray(values);
+                    values = resizeArray(values, values.length, values.length + 10);
                 }
                 temp = "";
 
@@ -200,13 +200,13 @@ public class PA2
         {
             newValues[i] = values[i];
         }
-        return newValues;
+        return resizeArray(values, valuesSize, valuesSize);
     }
 
-    double[] resizeArray(double[] oldArray)
+    double[] resizeArray(double[] oldArray, int oldSize, int newLength)
     {
-        double[] newArray = new double[oldArray.length + 10];
-        for (int i = 0; i < oldArray.length; i++)
+        double[] newArray = new double[newLength];
+        for (int i = 0; i < oldSize; i++)
         {
             newArray[i] = oldArray[i];
         }
