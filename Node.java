@@ -6,10 +6,10 @@
 ****    This class is a Node for a Linked List class that stores Polygon objects
  *******************************************************************************/
 
-public class Node
+public class Node<T extends PlanarShape>
 {
     // Instance variables
-    private SemiCircle data;
+    private T data;
     private Node next;
     private Node prev;
 
@@ -20,7 +20,7 @@ public class Node
     }
 
     // Constructor
-    public Node(SemiCircle data_)
+    public Node(T data_)
     {
         data = data_;
     }
@@ -28,7 +28,7 @@ public class Node
     /**
      * @return data in Node
      */
-    public SemiCircle getData()
+    public T getData()
     {
         return data;
     }
@@ -36,7 +36,7 @@ public class Node
     /**
      * @param data_ takes a Polygon object and stores it in the data variable
      */
-    public void setData(SemiCircle data_)
+    public void setData(T data_)
     {
         data = data_;
     }
