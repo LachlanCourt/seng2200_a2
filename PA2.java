@@ -16,17 +16,17 @@ public class PA2
     public static void main(String args[])
     {
         // Try to load the file with the specified name and jump out into the run function if successful
-        try
-        {
+//        try
+//        {
             filename = args[0];
             PA2 assignment = new PA2();
             assignment.run();
-        }
+//        }
         // If there is an error loading the file, notify the user and run to the end of the main function
-        catch (ArrayIndexOutOfBoundsException e)
-        {
-            System.out.println("No file specified at program load. Terminating...");
-        }
+//        catch (ArrayIndexOutOfBoundsException e)
+//        {
+//            System.out.println("No file specified at program load. Terminating...");
+//        }
 
     }
 
@@ -52,6 +52,7 @@ public class PA2
         {
             inputText = createPolygon(inputText);
         }
+        System.out.println(unsortedList.toString());
 
 //        // Output the unsorted list
 //        System.out.println("Unsorted list:");
@@ -105,23 +106,24 @@ public class PA2
                 break;
             }
         }
-        while ((!(inData.toLowerCase().startsWith("p"))) || (!(inData.toLowerCase().startsWith("c"))) || (!(inData.toLowerCase().startsWith("s"))));
+        while ((!(inData.toLowerCase().startsWith("p"))) && (!(inData.toLowerCase().startsWith("c"))) && (!(inData.toLowerCase().startsWith("s"))));
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
         double[] values = interpretString(shapeString);
         ShapeFactory sf = new ShapeFactory();
-        switch (shapeString)
+        switch (shapeString.toLowerCase().toCharArray()[0])
         {
-            case "P":
+            case 'p':
             {
+                System.out.println("Adding polygon");
                 unsortedList.append(sf.createShape("POLYGON", values));
                 break;
             }
-            case "C":
+            case 'c':
             {
                 unsortedList.append(sf.createShape("CIRCLE", values));
                 break;
             }
-            case "S":
+            case 's':
             {
                 unsortedList.append(sf.createShape("SEMICIRCLE", values));
                 break;
@@ -135,12 +137,15 @@ public class PA2
     private double[] interpretString(String params)
     {
         params += " ";
-        String shapeType = params.substring(0, 1);
-        double[] values = new double[5];
+        while (params.charAt(0) == ' ')
+        {
+            params = params.substring(1);
+        }
+        double[] values = new double[10];
         int valuesSize = 0;
         // Remove initial character and the following space
         params = params.substring(1);
-        if (params.charAt(0) == ' ')
+        while (params.charAt(0) == ' ')
         {
             params = params.substring(1);
         }
@@ -152,13 +157,14 @@ public class PA2
          */
         // Add extra space to ensure the last point is included
 
-
-        // Temporary variables to hold x, y coordinates before they are added as a Point
-        double a = 0;
         // Loop through the remaining length of the String
         int paramsLength = params.length();
         for (int i = 0; i < paramsLength; i++)
         {
+            if ((params.length() != 0) && ((String.valueOf(params.charAt(0)).equalsIgnoreCase("p"))||(String.valueOf(params.charAt(0)).equalsIgnoreCase("c"))||(String.valueOf(params.charAt(0)).equalsIgnoreCase("s"))))
+            {
+                break;
+            }
             // If execution has reached a space, a number has been read
             if (params.charAt(0) == ' ')
             {
@@ -189,7 +195,12 @@ public class PA2
                 params = params.substring(1);
             }
         }
-        return values;
+        double[] newValues = new double[valuesSize];
+        for (int i = 0; i < valuesSize; i++)
+        {
+            newValues[i] = values[i];
+        }
+        return newValues;
     }
 
     double[] resizeArray(double[] oldArray)
