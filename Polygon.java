@@ -85,7 +85,7 @@ public class Polygon extends PlanarShape
     public String toString()
     {
         // Initialise the output String
-        String stringPoly = "[";
+        String stringPoly = "POLY=[";
 
         /*
          The last point in the array is the same as the first point, so loop to less than pointsSize so that it is not

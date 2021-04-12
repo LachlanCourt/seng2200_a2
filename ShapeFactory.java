@@ -8,22 +8,27 @@ public class ShapeFactory
         {
             case "polygon":
             {
-                Polygon shape = new Polygon(values.length / 2 + 1);
-                for (int i = 0; i < values.length - 1; i += 2)
+                Polygon shape = new Polygon((int)values[0] + 1);
+                for (int i = 1; i < values.length - 1; i += 2)
                 {
                     System.out.println(i);
                     shape.addPoint(new Point(values[i], values[i + 1]), false);
                 }
-                shape.addPoint(new Point(values[0], values[1]), true);
+                shape.addPoint(new Point(values[1], values[2]), true);
                 return shape;
             }
             case "circle":
             {
-                return new Circle();
+                Circle shape = new Circle();
+                shape.setCentre(new Point(values[0], values[1]));
+                shape.setRadius(values[2]);
+                return shape;
             }
             case "semicircle":
             {
-                return new SemiCircle();
+                SemiCircle shape = new SemiCircle();
+                shape.setPoints(new Point(values[0], values[1]), new Point(values[2], values[3]));
+                return shape;
             }
         }
         return null;
