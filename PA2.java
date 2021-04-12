@@ -50,9 +50,19 @@ public class PA2
         // While inputText is not empty, create polygons from the data
         while (inputText.compareTo("") != 0)
         {
-            inputText = createPolygon(inputText);
+            inputText = createPlanarShape(inputText);
         }
+        System.out.println("Unsorted List:");
         System.out.println(unsortedList.toString());
+
+
+        Iterator<PlanarShape> itr = unsortedList.iterator();
+        while (itr.hasNext())
+        {
+            sortedList.append(itr.next());
+        }
+        System.out.println("Sorted List:");
+        System.out.println(sortedList.toString());
 
 //        // Output the unsorted list
 //        System.out.println("Unsorted list:");
@@ -87,7 +97,7 @@ public class PA2
      * Precondition: text must be properly formatted with at least one polygon and at least one space between each character
      * Postcondition one polygon will be added to myPolygonList and the remaining text will be returned
      */
-    private String createPolygon(String inData)
+    private String createPlanarShape(String inData)
     {
         // Declare a string to hold a single polygon worth of data read from a text file
         String shapeString = "";
