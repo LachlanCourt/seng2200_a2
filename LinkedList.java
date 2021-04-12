@@ -96,38 +96,42 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public void insertInOrder(T data_)
     {
-        /*
-        // Reset the current of the List
-        currentToHead();
         // If the list is empty, add the item to the start of the list
-        if (current == sentinel)
+        if (sentinel.getNext() == sentinel)
         {
             prepend(data_);
         }
         else
         {
             // Create a temporary polygon in order to check the correct position using the ComesBefore method
-            Polygon temp = data_;
+            PlanarShape temp = data_;
+            Node<T> tempNode = sentinel.getNext();
             // Loop through from the start of the list, checking each polygon against the temporary one
-            while (temp.comesBefore(current.getData()))
+            while (temp.compareTo(tempNode.getData()) > 0)
             {
                 // If execution has reached the end of the list, add the item to the end of the list
-                if (!hasNext())
+                if (tempNode.getNext() == sentinel)
                 {
                     // Jump the current past the sentinel to the start of the list again
-                    next();
                     // Add the item to the end of the list and return
                     append(data_);
                     return;
                 }
                 // Step to the next item in the list
-                next();
+                tempNode = tempNode.getNext();
             }
             // If the loop has ended, the current pointer is in place to insert the new data before it
-            insert(data_);
+            // Create new node with the specified data
+            Node<T> newNode = new Node<T>(data_);
+            // Set next and previous of the new node
+            newNode.setNext(tempNode);
+            newNode.setPrev(tempNode.getPrev());
+            // Link the nodes on either side of the new node
+            tempNode.getPrev().setNext(newNode);
+            tempNode.setPrev(newNode);
+            // Increase the size
+            size++;
         }
-        (
-         */
     }
 
     /**
