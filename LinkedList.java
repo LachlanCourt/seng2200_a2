@@ -1,3 +1,4 @@
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
@@ -214,6 +215,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
 
         Node<T> current = sentinel;
+        int coModificationCount = size;
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -225,6 +227,10 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public boolean hasNext()
         {
+            if (coModificationCount != size)
+            {
+                throw new ConcurrentModificationException();
+            }
             try
             {
                 if (current.getNext() == sentinel)
@@ -253,6 +259,14 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public T next()
         {
+            if (coModificationCount != size)
+            {
+                throw new ConcurrentModificationException();
+            }
+            if (!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
             try
             {
                 // Step to the next item in the list

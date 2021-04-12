@@ -5,7 +5,7 @@ public class test
     public static void main(String[] args)
     {
         LinkedList<PlanarShape> list = new LinkedList<PlanarShape>();
-        Iterator<PlanarShape> itr = list.iterator();
+
 
         Circle tempCirc = new Circle();
         tempCirc.setCentre(new Point(3, 2));
@@ -18,8 +18,8 @@ public class test
         list.append(tempSemi);
         list.append(tempPoly);
 
-        itr.next();
         System.out.println(list.removeFromHead());
+        Iterator<PlanarShape> itr = list.iterator();
         while (itr.hasNext())
         {
             System.out.println(itr.next());
@@ -35,6 +35,7 @@ public class test
         {
             System.out.println(itr2.next());
         }
+        //itr2.next();
 
 
         /*
