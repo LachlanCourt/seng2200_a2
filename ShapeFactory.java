@@ -1,6 +1,6 @@
 public class ShapeFactory
 {
-    public PlanarShape createShape(String shape)
+    public PlanarShape createShape(String shape, double[] values)
     {
         if (shape.equalsIgnoreCase("POLYGON"))
         {

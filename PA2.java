@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Iterator;
 
 import java.util.*;
@@ -45,13 +46,13 @@ public class PA2
         }
 
         // Notify user of successful load
-        System.out.println("Text file loaded successfully. Generating Polygons...");
-//        // While inputText is not empty, create polygons from the data
-//        while (inputText.compareTo("") != 0)
-//        {
-//            inputText = createPolygon(inputText);
-//        }
-//
+        System.out.println("Text file loaded successfully. Generating Planar Shapes...");
+        // While inputText is not empty, create polygons from the data
+        while (inputText.compareTo("") != 0)
+        {
+            inputText = createPolygon(inputText);
+        }
+
 //        // Output the unsorted list
 //        System.out.println("Unsorted list:");
 //        System.out.println(myPolygonsList.toString());
@@ -80,35 +81,125 @@ public class PA2
     /**
      * Takes a string of points from a text file and reads through until exactly one polygon has been read from it
      *
-     * @param text as a string of points read from a text file
+     * @param inData as a string of points read from a text file
      * @return the remaining string after a polygon has been read from it and the relevant data removed from it
      * Precondition: text must be properly formatted with at least one polygon and at least one space between each character
      * Postcondition one polygon will be added to myPolygonList and the remaining text will be returned
      */
-    private String createPolygon(String text)
+    private String createPolygon(String inData)
     {
-//        // Declare a string to hold a single polygon worth of data read from a text file
-//        String polygonString = "";
-//        // While the string does not start with a p, loop
-//        do
-//        {
-//            // If text is not empty, add the first character to polygonString and remove it from text
-//            if (text.length() != 0)
-//            {
-//                polygonString += text.charAt(0);
-//                text = text.substring(1);
-//            }
-//            // If text is empty, break out of the loop
-//            else
-//            {
-//                break;
-//            }
-//        }
-//        while (!text.toLowerCase().startsWith("p"));
-//        // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
-//        myPolygonsList.append(new Polygon(polygonString));
-//        // Return the remaining string
-        return text;
+        // Declare a string to hold a single polygon worth of data read from a text file
+        String shapeString = "";
+        // While the string does not start with a p, loop
+        do
+        {
+            // If text is not empty, add the first character to polygonString and remove it from text
+            if (inData.length() != 0)
+            {
+                shapeString += inData.charAt(0);
+                inData = inData.substring(1);
+            }
+            // If text is empty, break out of the loop
+            else
+            {
+                break;
+            }
+        }
+        while ((!(inData.toLowerCase().startsWith("p"))) || (!(inData.toLowerCase().startsWith("c"))) || (!(inData.toLowerCase().startsWith("s"))));
+        // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
+        double[] values = interpretString(shapeString);
+        ShapeFactory sf = new ShapeFactory();
+        switch (shapeString)
+        {
+            case "P":
+            {
+                unsortedList.append(sf.createShape("POLYGON", values));
+                break;
+            }
+            case "C":
+            {
+                unsortedList.append(sf.createShape("CIRCLE", values));
+                break;
+            }
+            case "S":
+            {
+                unsortedList.append(sf.createShape("SEMICIRCLE", values));
+                break;
+            }
+        }
+
+        // Return the remaining string
+        return inData;
+    }
+
+    private double[] interpretString(String params)
+    {
+        params += " ";
+        String shapeType = params.substring(0, 1);
+        double[] values = new double[5];
+        int valuesSize = 0;
+        // Remove initial character and the following space
+        params = params.substring(1);
+        if (params.charAt(0) == ' ')
+        {
+            params = params.substring(1);
+        }
+        // Get number of points as the next item in the String
+        String temp = "";
+        /*
+         Loop through the length of the String to read the number of Points. By setting the for loop to the entire
+         length it accounts for a number of points with any number of digits.
+         */
+        // Add extra space to ensure the last point is included
+
+
+        // Temporary variables to hold x, y coordinates before they are added as a Point
+        double a = 0;
+        // Loop through the remaining length of the String
+        int paramsLength = params.length();
+        for (int i = 0; i < paramsLength; i++)
+        {
+            // If execution has reached a space, a number has been read
+            if (params.charAt(0) == ' ')
+            {
+                // Remove any excess duplicate spaces
+                while ((params.length() != 0) && (params.charAt(0) == ' '))
+                {
+                    params = params.substring(1);
+                }
+                // Convert temp to a double and reset it ready to read a y coordinate
+                values[valuesSize] = Double.valueOf(temp);
+                valuesSize++;
+                if (valuesSize == values.length)
+                {
+                    values = resizeArray(values);
+                }
+                temp = "";
+
+                // If params is empty, there's no more numbers to read and no more Points to add
+                if (params.length() == 0)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                // If execution is not reading a space, it must be part of a number. Add it to temp and remove from the String
+                temp += params.charAt(0);
+                params = params.substring(1);
+            }
+        }
+        return values;
+    }
+
+    double[] resizeArray(double[] oldArray)
+    {
+        double[] newArray = new double[oldArray.length + 10];
+        for (int i = 0; i < oldArray.length; i++)
+        {
+            newArray[i] = oldArray[i];
+        }
+        return newArray;
     }
 
     /**
