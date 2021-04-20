@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.Iterator;
 
 import java.util.*;
@@ -16,17 +15,17 @@ public class PA2
     public static void main(String args[])
     {
         // Try to load the file with the specified name and jump out into the run function if successful
-//        try
-//        {
+        try
+        {
             filename = args[0];
             PA2 assignment = new PA2();
             assignment.run();
-//        }
+        }
         // If there is an error loading the file, notify the user and run to the end of the main function
-//        catch (ArrayIndexOutOfBoundsException e)
-//        {
-//            System.out.println("No file specified at program load. Terminating...");
-//        }
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+            System.out.println("No file specified at program load. Terminating...");
+        }
 
     }
 
@@ -52,38 +51,18 @@ public class PA2
         {
             inputText = createPlanarShape(inputText);
         }
-        System.out.println("Unsorted List:");
-        System.out.println(unsortedList.toString());
 
+        System.out.println("Unsorted List:");
+        System.out.println(unsortedList);
 
         Iterator<PlanarShape> itr = unsortedList.iterator();
         while (itr.hasNext())
         {
             sortedList.insertInOrder(itr.next());
         }
-        System.out.println("Sorted List:");
-        System.out.println(sortedList.toString());
 
-//        // Output the unsorted list
-//        System.out.println("Unsorted list:");
-//        System.out.println(myPolygonsList.toString());
-//
-//        // Loop through the unsorted list and add each item in order to the sorted list
-//        int listSize = myPolygonsList.getSize();
-//        /*
-//         Loop through every item in the list. Because it's being inserted in order it doesn't matter where the current
-//         pointer is, as long as the whole list is iterated over
-//         */
-//        for (int i = 0; i < listSize; i++)
-//        {
-//            // Get the next polygon in the list and add into sortedPolygons in order
-//            Polygon temp = myPolygonsList.next();
-//            sortedPolygons.insertInOrder(temp);
-//        }
-//
-//        // Output the sorted list
-//        System.out.println("Sorted List:");
-//        System.out.println(sortedPolygons.toString());
+        System.out.println("Sorted List:");
+        System.out.println(sortedList);
 
         // End the program
         System.out.println("Program complete!");
@@ -101,7 +80,7 @@ public class PA2
     {
         // Declare a string to hold a single polygon worth of data read from a text file
         String shapeString = "";
-        // While the string does not start with a p, loop
+        // While the string does not start with a p, c, or s, loop
         do
         {
             // If text is not empty, add the first character to polygonString and remove it from text
@@ -119,26 +98,48 @@ public class PA2
         while ((!(inData.toLowerCase().startsWith("p"))) && (!(inData.toLowerCase().startsWith("c"))) && (!(inData.toLowerCase().startsWith("s"))));
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
         double[] values = interpretString(shapeString);
-        ShapeFactory sf = new ShapeFactory();
-        switch (shapeString.toLowerCase().toCharArray()[0])
+
+        try
         {
-            case 'p':
+            switch (shapeString.substring(0, 1).toLowerCase())
             {
-                System.out.println("Adding polygon");
-                unsortedList.append(sf.createShape("POLYGON", values));
+                case "p":
+                {
+
+                    Polygon shape = (Polygon) ShapeFactory.createShape("POLYGON", values[0]);
+                    for (int i = 1; i < values.length - 1; i += 2)
+                    {
+                        shape.addPoint(new Point(values[i], values[i + 1]), false);
+                    }
+                    shape.addPoint(new Point(values[1], values[2]), true);
+                    unsortedList.append(shape);
+                }
+
                 break;
-            }
-            case 'c':
-            {
-                unsortedList.append(sf.createShape("CIRCLE", values));
-                break;
-            }
-            case 's':
-            {
-                unsortedList.append(sf.createShape("SEMICIRCLE", values));
-                break;
+
+                case "c":
+                {
+                    Circle shape = (Circle) ShapeFactory.createShape("CIRCLE");
+                    shape.setCentre(new Point(values[0], values[1]));
+                    shape.setRadius(values[2]);
+                    unsortedList.append(shape);
+                    break;
+                }
+                case "s":
+                {
+                    SemiCircle shape = (SemiCircle) ShapeFactory.createShape("SEMICIRCLE");
+                    shape.setPoints(new Point(values[0], values[1]), new Point(values[2], values[3]));
+                    unsortedList.append(shape);
+
+                    break;
+                }
             }
         }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
 
         // Return the remaining string
         return inData;
@@ -171,7 +172,7 @@ public class PA2
         int paramsLength = params.length();
         for (int i = 0; i < paramsLength; i++)
         {
-            if ((params.length() != 0) && ((String.valueOf(params.charAt(0)).equalsIgnoreCase("p"))||(String.valueOf(params.charAt(0)).equalsIgnoreCase("c"))||(String.valueOf(params.charAt(0)).equalsIgnoreCase("s"))))
+            if ((params.length() != 0) && ((String.valueOf(params.charAt(0)).equalsIgnoreCase("p")) || (String.valueOf(params.charAt(0)).equalsIgnoreCase("c")) || (String.valueOf(params.charAt(0)).equalsIgnoreCase("s"))))
             {
                 break;
             }

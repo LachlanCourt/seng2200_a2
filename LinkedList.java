@@ -1,8 +1,3 @@
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.function.Consumer;
-
 /*******************************************************************************
  ****    SENG2200 Assignment 1
  ****    c3308061
@@ -10,16 +5,23 @@ import java.util.function.Consumer;
  ****    19/03/2021
  ****    This class is a Linked List that stores Polygon objects
  *******************************************************************************/
+
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedList<T extends PlanarShape> implements Iterable<T>
 {
     // Instance variables
     private Node<T> sentinel;
     private int size;
+    private int modCount;
 
     // Default Constructor
     public LinkedList()
     {
         size = 0;
+        modCount = 0;
         sentinel = new Node<T>();
         sentinel.setNext(sentinel);
         sentinel.setPrev(sentinel);
@@ -43,6 +45,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         sentinel.getNext().setPrev(temp);
         sentinel.setNext(temp);
         size++;
+        modCount++;
     }
 
     /**
@@ -63,28 +66,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         sentinel.getPrev().setNext(temp);
         sentinel.setPrev(temp);
         size++;
-    }
-
-    /**
-     * Adds data before the current pointer
-     *
-     * @param data_ to be added to the Linked List
-     *              Precondition: None
-     *              Postcondition: Data is added to the list before the current
-     */
-    public void insert(T data_)
-    {
-        /*
-        // Create new node with the specified data
-        Node temp = new Node<T>(data_);
-        // Set next and previous of the new node
-        temp.setNext(current);
-        temp.setPrev(current.getPrev());
-        // Link the nodes on either side of the new node
-        current.getPrev().setNext(temp);
-        current.setPrev(temp);
-        // Increase the size
-        size++;*/
+        modCount++;
     }
 
     /**
@@ -131,6 +113,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             tempNode.setPrev(newNode);
             // Increase the size
             size++;
+            modCount++;
         }
     }
 
@@ -159,6 +142,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             //first.setPrev(null);
             // Decrease the size and return the data
             size--;
+            modCount++;
             return temp;
         }
         // If the list is empty, return null
@@ -190,15 +174,13 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         // Declare a string to hold the running contents
         String returnData = "";
         // Loop through every node in the list, and add the toString conversion of it to returnData
-        for (int i = 0; i < getSize(); i++)
+        for (T i : this)
         {
-            T temp = removeFromHead();
-            returnData += temp.toString() + "\n";
-            append(temp);
+            returnData += i.toString() + "\n";
         }
-        // Return
         return returnData;
     }
+
     /**
      * Returns an iterator over elements of type {@code T}.
      *
@@ -213,8 +195,8 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     class myListIterator implements Iterator<T>
     {
 
-        Node<T> current = sentinel;
-        int coModificationCount = size;
+        private Node<T> current = sentinel;
+        private int coModificationCount = modCount;
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -226,27 +208,17 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public boolean hasNext()
         {
-            if (coModificationCount != size)
+            if (coModificationCount != modCount)
             {
                 throw new ConcurrentModificationException();
             }
-            try
+
+            if (current.getNext() == sentinel)
             {
-                if (current.getNext() == sentinel)
-                {
-                    return false;
-                }
-                return true;
+                return false;
             }
-            catch (NullPointerException e)
-            {
-                current = sentinel.getNext();
-                if (current.getNext() == sentinel)
-                {
-                    return false;
-                }
-                return true;
-            }
+            return true;
+
         }
 
         /**
@@ -258,64 +230,16 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public T next()
         {
-            if (coModificationCount != size)
-            {
-                throw new ConcurrentModificationException();
-            }
             if (!hasNext())
             {
                 throw new NoSuchElementException();
             }
-            try
-            {
-                // Step to the next item in the list
-                current = current.getNext();
-                /*
-                 If after the step the current has become the sentinel, the list has reached the end. Step again to be on the
-                 current
-                 */
-                /*
-                if (current == sentinel)
-                {
-                    current = sentinel.getNext();
-                }*/
 
-                // Return the data of the new current
-                return current.getData();
-            }
-            catch (NullPointerException e)
-            {
-                current = sentinel.getNext();
-                return current.getData();
-            }
-        }
+            // Step to the next item in the list
+            current = current.getNext();
 
-        /**
-         * Performs the given action for each remaining element until all elements
-         * have been processed or the action throws an exception.  Actions are
-         * performed in the order of iteration, if that order is specified.
-         * Exceptions thrown by the action are relayed to the caller.
-         * <p>
-         * The behavior of an iterator is unspecified if the action modifies the
-         * collection in any way (even by calling the {@link #remove remove} method
-         * or other mutator methods of {@code Iterator} subtypes),
-         * unless an overriding class has specified a concurrent modification policy.
-         * <p>
-         * Subsequent behavior of an iterator is unspecified if the action throws an
-         * exception.
-         *
-         * @param action The action to be performed for each element
-         * @throws NullPointerException if the specified action is null
-         * @implSpec <p>The default implementation behaves as if:
-         * <pre>{@code
-         *     while (hasNext())
-         *         action.accept(next());
-         * }</pre>
-         * @since 1.8
-         */
-        @Override
-        public void forEachRemaining(Consumer<? super T> action)
-        {
+            // Return the data of the new current
+            return current.getData();
 
         }
     }
