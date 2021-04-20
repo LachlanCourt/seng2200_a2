@@ -6,7 +6,7 @@ public class ShapeFactory
         {
             case "polygon":
             {
-                return new Polygon((int)polygonSize + 1);
+                return new Polygon((int)polygonSize);
             }
             case "circle":
             {

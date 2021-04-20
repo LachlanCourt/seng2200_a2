@@ -17,7 +17,7 @@ public class Polygon extends PlanarShape
     // Default Constructor
     public Polygon(int size_)
     {
-        points = new Point[size_];
+        points = new Point[size_ + 1];
     }
 
     public void addPoint(Point newPoint, boolean lastPoint)

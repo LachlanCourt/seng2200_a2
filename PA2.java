@@ -99,12 +99,13 @@ public class PA2
         // Create a new polygon with the data in polygonString and add it to the end of myPolygonsList
         double[] values = interpretString(shapeString);
 
-        switch (shapeString.substring(0, 1).toLowerCase())
+        try
         {
-            case "p":
+            switch (shapeString.substring(0, 1).toLowerCase())
             {
-                try
+                case "p":
                 {
+
                     Polygon shape = (Polygon) ShapeFactory.createShape("POLYGON", values[0]);
                     for (int i = 1; i < values.length - 1; i += 2)
                     {
@@ -113,42 +114,32 @@ public class PA2
                     shape.addPoint(new Point(values[1], values[2]), true);
                     unsortedList.append(shape);
                 }
-                catch (Exception e)
-                {
-                    System.out.println(e);
-                }
+
                 break;
-            }
-            case "c":
-            {
-                try
+
+                case "c":
                 {
                     Circle shape = (Circle) ShapeFactory.createShape("CIRCLE");
                     shape.setCentre(new Point(values[0], values[1]));
                     shape.setRadius(values[2]);
                     unsortedList.append(shape);
+                    break;
                 }
-                catch (Exception e)
-                {
-                    System.out.println(e);
-                }
-                break;
-            }
-            case "s":
-            {
-                try
+                case "s":
                 {
                     SemiCircle shape = (SemiCircle) ShapeFactory.createShape("SEMICIRCLE");
                     shape.setPoints(new Point(values[0], values[1]), new Point(values[2], values[3]));
                     unsortedList.append(shape);
+
+                    break;
                 }
-                catch (Exception e)
-                {
-                    System.out.println(e);
-                }
-                break;
             }
         }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
 
         // Return the remaining string
         return inData;

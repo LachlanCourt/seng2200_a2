@@ -15,11 +15,13 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     // Instance variables
     private Node<T> sentinel;
     private int size;
+    private int modCount;
 
     // Default Constructor
     public LinkedList()
     {
         size = 0;
+        modCount = 0;
         sentinel = new Node<T>();
         sentinel.setNext(sentinel);
         sentinel.setPrev(sentinel);
@@ -43,6 +45,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         sentinel.getNext().setPrev(temp);
         sentinel.setNext(temp);
         size++;
+        modCount++;
     }
 
     /**
@@ -63,6 +66,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         sentinel.getPrev().setNext(temp);
         sentinel.setPrev(temp);
         size++;
+        modCount++;
     }
 
     /**
@@ -109,6 +113,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             tempNode.setPrev(newNode);
             // Increase the size
             size++;
+            modCount++;
         }
     }
 
@@ -137,6 +142,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             //first.setPrev(null);
             // Decrease the size and return the data
             size--;
+            modCount++;
             return temp;
         }
         // If the list is empty, return null
@@ -190,7 +196,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
 
         private Node<T> current = sentinel;
-        private int coModificationCount = size;
+        private int coModificationCount = modCount;
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -202,7 +208,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         @Override
         public boolean hasNext()
         {
-            if (coModificationCount != size)
+            if (coModificationCount != modCount)
             {
                 throw new ConcurrentModificationException();
             }
