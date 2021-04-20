@@ -1,13 +1,13 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
+ ****    20/04/2021
  ****    This class stores the information of a Polygon including an array of
  ****    Points and it's area
  *******************************************************************************/
 
-// An implementation of the ComparePoly function that includes functionality for non-standard Polygons
+// An extension of the PlanarShape class that includes functionality for non-standard Polygons
 public class Polygon extends PlanarShape
 {
     // Instance variables
@@ -15,23 +15,45 @@ public class Polygon extends PlanarShape
     private int pointsSize;
 
     // Default Constructor
+    public Polygon()
+    {
+        pointsSize = 0;
+    }
+
+    // Standard constructor
     public Polygon(int size_)
     {
         points = new Point[size_ + 1];
+        pointsSize = 0;
     }
 
+    /**
+     * Adds a point to the array of points that represent the Polygon
+     *
+     * @param newPoint  a Point object that should be added to the end of the existing array of points
+     * @param lastPoint a boolean indicating whether the Point being added is the last point thus completing the polygon
+     * Precondition: Points array must be initialised, either in the constructor or in setNumberPoints()
+     * Postcondition: newPoint is added to the points array
+     */
     public void addPoint(Point newPoint, boolean lastPoint)
     {
+        // Add the new Point to the next spot in the points array
         points[pointsSize] = newPoint;
         if (!lastPoint)
         {
+            /*
+             Only increment the logical size if the point being added is the last point. The last point is a duplicate
+             of the first point and is used to calculate the area. As it's a duplicate, it is "Hidden" by not increasing
+             the logical size
+             */
             pointsSize++;
         }
     }
 
     /**
      * Calculates the area of the polygon
-     * Precondition: Points array should not be empty (Otherwise area will be 0)
+     * @return the area of the polygon
+     * Precondition: Points array must be initialised. If there are no points added then area will be 0
      * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
      */
     public double area()
@@ -54,9 +76,10 @@ public class Polygon extends PlanarShape
 
     /**
      * Calculates the distance from the origin of the point closest to the origin
+     * @return the distance from the origin from the point closest to the origin
      * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
-     * <Point closest to the origin> to the origin
+     * Postcondition: leastDistance variable will hold the value of the Euclidian distance to the from the point
+     *  closest to the origin
      */
     public double originDistance()
     {
@@ -75,10 +98,21 @@ public class Polygon extends PlanarShape
     }
 
     /**
+     * Initialises (or overwrites) the array of Points if the Polygon was initialised with the default constructor
+     * @param size_ the integer number of points that will be stored in the Polygon
+     * Precondition: None
+     * Postcondition: The points array will be initialised, or overwritten as an empty array if it already existed
+     */
+    public void setNumberPoints(int size_)
+    {
+        points = new Point[size_ + 1];
+    }
+
+    /**
      * Outputs the Polygon as a string
      *
      * @return a String representation of the Points in the polygon followed by the area
-     * Precondition: points should not (but can) be empty. Area should have been calculated otherwise it will be 0
+     * Precondition: points should not (but can) be empty. Area with an empty array of Points will be 0
      * Postcondition: A String representation of the Polygon will be returned
      */
     @Override
@@ -94,7 +128,7 @@ public class Polygon extends PlanarShape
         for (int i = 0; i < pointsSize; i++)
         {
             // Add each Point to the String
-            stringPoly += " " + points[i].toString();
+            stringPoly += " " + points[i];
         }
 
         // Close the bracket to indicate the list of Points is complete
@@ -105,13 +139,4 @@ public class Polygon extends PlanarShape
 
         return stringPoly;
     }
-
-    /**
-     * Determines if the object passed as a parameter comes before this object
-     * @param o takes an object to be compared against this
-     * @return true if this comes before the param, and false if it comes after
-     * Precondition: this Polygon object and params o should be properly initialised with points, area and leastDistance
-     * Postcondition: a true or false value will be returned depending on whether this comes before o
-     */
-
 }
