@@ -4,7 +4,7 @@
  ****    Lachlan Court
  ****    20/04/2021
  ****    This class stores the information of a Polygon including an array of
- ****    Points and it's area
+ ****    Points and functions to calculate it's area
  *******************************************************************************/
 
 // An extension of the PlanarShape class that includes functionality for non-standard Polygons
