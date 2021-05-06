@@ -1,15 +1,15 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
- ****    This class stores the information of a Polygon including an array of
- ****    Points and it's area
+ ****    06/05/2021
+ ****    This class stores the information of a SemiCircle including the centre,
+ ****    a number of Points around its curved edge, and functions to calculate
+ ****    and it's area
  *******************************************************************************/
 
 import java.lang.Math;
-
-// An implementation of the ComparePoly function that includes functionality for non-standard Polygons
+// An implementation of the ComparePoly function that includes functionality for SemiCircles
 public class SemiCircle extends PlanarShape
 {
     // Instance variables
@@ -23,20 +23,39 @@ public class SemiCircle extends PlanarShape
     {
     }
 
+    /**
+     * Sets the points of a SemiCircle after it has been created
+     * @param centre_ The centre of the polygon, imagining that it was a full circle
+     * @param pointOnLine_ A point on the curved side of the polygon that is perpendicular to the straight side
+     * Precondition: None
+     * Postcondition: Points are set for the SemiCircle so that area calculations can be mdae
+     */
     public void setPoints(Point centre_, Point pointOnLine_)
     {
         centre = centre_;
         pointOnLine = pointOnLine_;
-
+        // Calculate the points on either side of the centre points
         leftOfCentre = new Point(centre.getX() - abs(centre.getY() - pointOnLine.getY()), centre.getY() + abs(centre.getX() - pointOnLine.getX()));
         rightOfCentre = new Point(centre.getX() + abs(centre.getY() - pointOnLine.getY()), centre.getY() - abs(centre.getX() - pointOnLine.getX()));
     }
 
+    /**
+     * Returns the radius of the semicircle
+     * @return return value
+     * Precondition: Points must have been initialised with setPoints()
+     * Postcondition: return value
+     */
     private double getRadius()
     {
+        // Return the radius of the semicircle
         return Math.sqrt((Math.pow(pointOnLine.getY() - centre.getY(), 2)) + (Math.pow(pointOnLine.getX() - centre.getX(), 2)));
     }
 
+    /**
+     * Returns the absolute value
+     * @param a a double to be made absolute
+     * @return a positive version of a
+     */
     private double abs(double a)
     {
         if (a < 0)
@@ -47,9 +66,10 @@ public class SemiCircle extends PlanarShape
     }
 
     /**
-     * Calculates the area of the polygon
-     * Precondition: Points array should not be empty (Otherwise area will be 0)
-     * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
+     * Calculates the area of the SemiCircle
+     * @return the area of the SemiCircle
+     * Precondition: Points must have been initialised with setPoints()
+     * Postcondition: return value
      */
     public double area()
     {
@@ -57,47 +77,43 @@ public class SemiCircle extends PlanarShape
     }
 
     /**
-     * Calculates the distance from the origin of the point closest to the origin
-     * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidean distance from the
-     *                <Point closest to the origin> to the origin
+     * Calculates the distance from the origin centre
+     * @return the distance from the origin of the point closest to the origin
+     * Precondition: Points must have been initialised with setPoints()
+     * Postcondition: return value
      */
     public double originDistance()
     {
+        // Assume the centre is the closest
         double distance = centre.calcDistance();
+        // If the point on the line is closer, replace distance with that value
         if (pointOnLine.calcDistance() < distance)
         {
             distance = pointOnLine.calcDistance();
         }
+        // If the point to the left of the centre is closer, replace distance with that value
         if (leftOfCentre.calcDistance() < distance)
         {
             distance = leftOfCentre.calcDistance();
         }
+        // If the point to the right of the centre is closer, replace distance with that value
         if (rightOfCentre.calcDistance() < distance)
         {
             distance = rightOfCentre.calcDistance();
         }
+        // Return the value which will now be the closest point
         return distance;
     }
 
     /**
-     * Outputs the Polygon as a string
-     * @return a String representation of the Points in the polygon followed by the area
-     * Precondition: points should not (but can) be empty. Area should have been calculated otherwise it will be 0
-     * Postcondition: A String representation of the Polygon will be returned
+     * Outputs the SemiCircle as a string
+     * @return a String representation of the circle, followed by the area
+     * Precondition: Points must have been initialised with setPoints()
+     * Postcondition: return value
      */
     @Override
     public String toString()
     {
         return "SEMI=[" + centre.toString() + " " + pointOnLine.toString() + "]:    " + String.format("%5.2f", this.area());
     }
-
-    /**
-     * Determines if the object passed as a parameter comes before this object
-     * @param o takes an object to be compared against this
-     * @return true if this comes before the param, and false if it comes after
-     * Precondition: this Polygon object and params o should be properly initialised with points, area and leastDistance
-     * Postcondition: a true or false value will be returned depending on whether this comes before o
-     */
-
 }

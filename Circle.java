@@ -9,7 +9,7 @@
 
 import java.lang.Math;
 
-// An extension of the PlanarShape class that includes functionality for non-standard Circles
+// An extension of the PlanarShape class that includes functionality for Circles
 public class Circle extends PlanarShape
 {
     // Instance variables
