@@ -1,64 +1,50 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
- ****    This class stores the information of a Polygon including an array of
- ****    Points and it's area
+ ****    06/05/2021
+ ****    This class is the parent of a shape that can be stored in a LinkedList
  *******************************************************************************/
 
 // An implementation of the ComparePoly function that includes functionality for non-standard Polygons
 public abstract class PlanarShape implements Comparable<PlanarShape>
 {
-    // Instance variables
-    private Point[] points;
-    private int pointsSize;
-
-    private double area;
-    private double leastDistance;
-
     // Default Constructor
     public PlanarShape()
     {
     }
 
-    // Constructor
-    public PlanarShape(String params)
-    {
-    }
-
     /**
-     * Calculates the area of the polygon
-     * Precondition: Points array should not be empty (Otherwise area will be 0)
-     * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
+     * Calculates the area of the shape
+     * @return the calculated area
      */
     public abstract double area();
 
     /**
-     * Outputs the Polygon as a string
-     *
-     * @return a String representation of the Points in the polygon followed by the area
-     * Precondition: points should not (but can) be empty. Area should have been calculated otherwise it will be 0
-     * Postcondition: A String representation of the Polygon will be returned
+     * Outputs the PlanarShape as a string
+     * @return a String representation of the PlanarShape, followed by the area
      */
     @Override
     public abstract String toString();
 
     /**
      * Calculates the distance from the origin of the point closest to the origin
-     * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidian distance from the
-     * <Point closest to the origin> to the origin
+     * @return the calculated distance
      */
     public abstract double originDistance();
 
+    /**
+     * Determines whether this comesBefore the shape passed as a parameter according to its area and origin distance
+     * @param s a PlanarShape to be compared
+     * @return an integer -1 or 1 determining whether this comes before or after the parameter
+     */
     @Override
     public int compareTo(PlanarShape s)
     {
         // Temporary variables for calculations
         double differenceMargin;
         double areaTest;
-        // Determine the smaller polygon and calculate 0.05% of this area
+        // Determine the smaller PlanarShape and calculate 0.05% of this area
         double margin = 0.0005;
         if (this.area() - s.area() < 0)
         {
@@ -75,7 +61,7 @@ public abstract class PlanarShape implements Comparable<PlanarShape>
         {
             areaTest *= -1;
         }
-        // If the difference in area is smaller than the calculated margin, use leastDistance to determine the order
+        // If the difference in area is smaller than the calculated margin, use originDistance to determine the order
         if (areaTest < differenceMargin)
         {
             if (this.originDistance() < s.originDistance())

@@ -1,9 +1,9 @@
 /*******************************************************************************
-****    SENG2200 Assignment 1
+****    SENG2200 Assignment 2
 ****    c3308061
 ****    Lachlan Court
-****    19/03/2021
-****    This class is a Node for a Linked List class that stores Polygon objects
+****    04/05/2021
+****    This class is a Node for a Linked List class that stores PlanarShape objects
  *******************************************************************************/
 
 public class Node<T extends PlanarShape>

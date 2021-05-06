@@ -1,8 +1,8 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
+ ****    21/04/2021
  ****    This class is a Linked List that stores Polygon objects
  *******************************************************************************/
 
@@ -29,10 +29,9 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     /**
      * Adds data to the start of the list
-     *
      * @param data_ to be added to the Linked List
-     *              Precondition: None
-     *              Postcondition: Data is added to the start of the list
+     * Precondition: None
+     * Postcondition: Data is added to the start of the list
      */
     public void prepend(T data_)
     {
@@ -44,6 +43,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         // Link the nodes on either side of the new node
         sentinel.getNext().setPrev(temp);
         sentinel.setNext(temp);
+        // Increase the size and increment the mod count
         size++;
         modCount++;
     }
@@ -52,8 +52,8 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      * Adds data to the end of the list
      *
      * @param data_ to be added to the Linked List
-     *              Precondition: None
-     *              Postcondition: Data is added to the end of the list
+     * Precondition: None
+     * Postcondition: Data is added to the end of the list
      */
     public void append(T data_)
     {
@@ -65,16 +65,17 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         // Link the nodes on either side of the new node
         sentinel.getPrev().setNext(temp);
         sentinel.setPrev(temp);
+        // Increase the size and increment the mod count
         size++;
         modCount++;
     }
 
     /**
-     * Adds data in order according to the CompareBefore method
+     * Adds data in order according to the compareTo method
      *
      * @param data_ to be added to the Linked List
-     *              Precondition: None
-     *              Postcondition: Data is added to the start of the list
+     * Precondition: None
+     * Postcondition: Data is added to the list in the correct place according the the compareTo method
      */
     public void insertInOrder(T data_)
     {
@@ -85,8 +86,9 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
         }
         else
         {
-            // Create a temporary polygon in order to check the correct position using the ComesBefore method
+            // Create a temporary PlanarShape in order to check the correct position using the compareTo method
             PlanarShape temp = data_;
+            // Create a temp
             Node<T> tempNode = sentinel.getNext();
             // Loop through from the start of the list, checking each polygon against the temporary one
             while (temp.compareTo(tempNode.getData()) > 0)
@@ -111,7 +113,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             // Link the nodes on either side of the new node
             tempNode.getPrev().setNext(newNode);
             tempNode.setPrev(newNode);
-            // Increase the size
+            // Increase the size and increment the mod count
             size++;
             modCount++;
         }
@@ -126,8 +128,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
      */
     public T removeFromHead()
     {
-        // Reset current pointer
-
         // Only remove an item if the list is not empty
         if (size > 0)
         {
@@ -137,10 +137,7 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
             // Link the sentinel to the second item in the list
             sentinel.getNext().getNext().setPrev(sentinel);
             sentinel.setNext(sentinel.getNext().getNext());
-            // Unlink the old head
-            //first.setNext(null);
-            //first.setPrev(null);
-            // Decrease the size and return the data
+            // Decrease the size and increment the mod count
             size--;
             modCount++;
             return temp;
@@ -173,17 +170,16 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
     {
         // Declare a string to hold the running contents
         String returnData = "";
-        // Loop through every node in the list, and add the toString conversion of it to returnData
+        // Loop through every node in the list, and add it to returnData
         for (T i : this)
         {
-            returnData += i.toString() + "\n";
+            returnData += i + "\n";
         }
         return returnData;
     }
 
     /**
-     * Returns an iterator over elements of type {@code T}.
-     *
+     * Returns an iterator over elements of type T
      * @return an Iterator.
      */
     @Override
@@ -194,29 +190,30 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
     class myListIterator implements Iterator<T>
     {
-
+        //Instance variables
         private Node<T> current = sentinel;
         private int coModificationCount = modCount;
 
         /**
-         * Returns {@code true} if the iteration has more elements.
-         * (In other words, returns {@code true} if {@link #next} would
-         * return an element rather than throwing an exception.)
-         *
-         * @return {@code true} if the iteration has more elements
+         * Returns true if the iteration has more elements.
+         * @return true if the iteration has more elements
+         * Precondition: None
+         * Postcondition: None
          */
         @Override
         public boolean hasNext()
         {
+            // Check if the comodification counter is different to the current modCount
             if (coModificationCount != modCount)
             {
                 throw new ConcurrentModificationException();
             }
-
+            // If the next item in the list is the sentinel, return false
             if (current.getNext() == sentinel)
             {
                 return false;
             }
+            // Otherwise return true
             return true;
 
         }
@@ -226,10 +223,13 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
          *
          * @return the next element in the iteration
          * @throws NoSuchElementException if the iteration has no more elements
+         * Precondition: None
+         * Postcondition: The current pointer references the next item in the list
          */
         @Override
         public T next()
         {
+            // If the iterator is at the end of the list, throw an exception
             if (!hasNext())
             {
                 throw new NoSuchElementException();
@@ -240,7 +240,6 @@ public class LinkedList<T extends PlanarShape> implements Iterable<T>
 
             // Return the data of the new current
             return current.getData();
-
         }
     }
 }

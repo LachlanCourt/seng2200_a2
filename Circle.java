@@ -1,15 +1,15 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
- ****    This class stores the information of a Polygon including an array of
- ****    Points and it's area
+ ****    21/04/2021
+ ****    This class stores the information of a Circle including the centre and
+ ****    radius, and functions to calculate it's area
  *******************************************************************************/
 
 import java.lang.Math;
 
-// An implementation of the ComparePoly function that includes functionality for non-standard Polygons
+// An extension of the PlanarShape class that includes functionality for Circles
 public class Circle extends PlanarShape
 {
     // Instance variables
@@ -21,20 +21,29 @@ public class Circle extends PlanarShape
     {
     }
 
+    /**
+     * Set's the Centre Point of the circle
+     * @param centre_ a Point object that represents the centre of the circle
+     */
     public void setCentre(Point centre_)
     {
         centre = centre_;
     }
 
+    /**
+     * Set's the Radius of the circle
+     * @param radius_ a double that represents the radius of the circle
+     */
     public void setRadius(double radius_)
     {
         radius = radius_;
     }
 
     /**
-     * Calculates the area of the polygon
-     * Precondition: Points array should not be empty (Otherwise area will be 0)
-     * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
+     * Calculates the area of the circle
+     * @return the area of the circle
+     * Precondition: radius cannot be null
+     * Postcondition: return value
      */
     public double area()
     {
@@ -42,10 +51,10 @@ public class Circle extends PlanarShape
     }
 
     /**
-     * Calculates the distance from the origin of the point closest to the origin
-     * Precondition: points array must have been initialised and cannot be empty
-     * Postcondition: leastDistance variable will hold the value of the Euclidean distance from the
-     *                <Point closest to the origin> to the origin
+     * Calculates the distance from the origin centre
+     * @return the distance from the origin of the centre
+     * Precondition: centre and radius cannot be null
+     * Postcondition: return value
      */
     public double originDistance()
     {
@@ -53,23 +62,15 @@ public class Circle extends PlanarShape
     }
 
     /**
-     * Outputs the Polygon as a string
-     * @return a String representation of the Points in the polygon followed by the area
-     * Precondition: points should not (but can) be empty. Area should have been calculated otherwise it will be 0
-     * Postcondition: A String representation of the Polygon will be returned
+     * Outputs the Circle as a string
+     * @return a String representation of the circle, followed by the area
+     * Precondition: centre and radius cannot be null
+     * Postcondition: return value
      */
     @Override
     public String toString()
     {
-        return "CIRC=[" + centre.toString() + " " + radius + "]:   " + String.format("%5.2f", this.area());
+        return "CIRC=[" + centre + " " + radius + "]:   " + String.format("%5.2f", this.area());
     }
-
-    /**
-     * Determines if the object passed as a parameter comes before this object
-     * @param o takes an object to be compared against this
-     * @return true if this comes before the param, and false if it comes after
-     * Precondition: this Polygon object and params o should be properly initialised with points, area and leastDistance
-     * Postcondition: a true or false value will be returned depending on whether this comes before o
-     */
 
 }
