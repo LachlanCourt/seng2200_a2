@@ -1,32 +1,12 @@
 public class ShapeFactory
 {
-    public static PlanarShape createShape(String shapeName, double polygonSize)
+    public static PlanarShape createShape(String shapeName)
     {
         switch (shapeName.toLowerCase())
         {
             case "polygon":
             {
-                return new Polygon((int)polygonSize);
-            }
-            case "circle":
-            {
-                return new Circle();
-            }
-            case "semicircle":
-            {
-                return new SemiCircle();
-            }
-            default:
-                return null;
-        }
-    }
-    public static PlanarShape createShape(String shapeName) throws Exception
-    {
-        switch (shapeName.toLowerCase())
-        {
-            case "polygon":
-            {
-                throw new Exception("Number of points not specified for Polygon");
+                return new Polygon();
             }
             case "circle":
             {

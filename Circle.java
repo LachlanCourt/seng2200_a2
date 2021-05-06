@@ -2,7 +2,7 @@
  ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
+ ****    21/04/2021
  ****    This class stores the information of a Circle including the centre and
  ****    radius, and functions to calculate it's area
  *******************************************************************************/

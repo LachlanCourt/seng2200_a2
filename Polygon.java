@@ -42,9 +42,9 @@ public class Polygon extends PlanarShape
         if (!lastPoint)
         {
             /*
-             Only increment the logical size if the point being added is the last point. The last point is a duplicate
-             of the first point and is used to calculate the area. As it's a duplicate, it is "Hidden" by not increasing
-             the logical size
+             Only increment the logical size if the point being added is not the last point. The last point is a
+             duplicate of the first point and is used to calculate the area. As it's a duplicate, it is "Hidden" by not
+             increasing the logical size
              */
             pointsSize++;
         }
