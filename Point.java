@@ -1,14 +1,13 @@
 /*******************************************************************************
- ****    SENG2200 Assignment 1
+ ****    SENG2200 Assignment 2
  ****    c3308061
  ****    Lachlan Court
- ****    19/03/2021
- ****    This class is a Point for a Polygon class that will store x, y
- ****    coordinates of a point in a Polygon
+ ****    06/05/2021
+ ****    This class is a Point for a class that extends PlanarShape. It will store x, y
+ ****    coordinates of a point in 2D space
  *******************************************************************************/
 
 // Used for sqrt function
-
 import java.lang.Math;
 
 // A coordinate point of a Polygon represented in cartesian coordinates
