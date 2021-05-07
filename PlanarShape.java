@@ -15,6 +15,13 @@ public abstract class PlanarShape implements Comparable<PlanarShape>
     }
 
     /**
+     * Takes an array of doubles that represent the points that make up a PlanarShape, and calls the shape specific
+     * functions to convert the data in the array into a valid shape
+     * @param values array of x and y coordinates that represent the points of the shape
+     */
+    public abstract void initialise(double[] values);
+
+    /**
      * Calculates the area of the shape
      * @return the calculated area
      */

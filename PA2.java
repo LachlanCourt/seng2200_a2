@@ -108,55 +108,36 @@ public class PA2
         // Create an array of values that interpreted from shapeString
         double[] values = interpretString(shapeString);
 
+        PlanarShape shape = null;
         // Check the first character in shapeString to determine the type of shape to create
         switch (shapeString.substring(0, 1).toLowerCase())
         {
             case "p": // Polygon
             {
-                // Create a Polygon using the ShapeFactory
-                Polygon shape = (Polygon) ShapeFactory.createShape("POLYGON");
-                // Set the number of points that will be passed to the Polygon object
-                shape.setNumberPoints((int) values[0]);
-                    /*
-                     Loop through the values and add a point for every 2 values, ignoring the first value which is the
-                     number of points
-                     */
-                for (int i = 1; i < values.length - 1; i += 2)
-                {
-                    // Pass false to indicate the point being added is not the last point
-                    shape.addPoint(new Point(values[i], values[i + 1]), false);
-                }
-                    /*
-                     Add the first point again, which will be used to calculate the area. Pass true to indicate it is
-                     the last point
-                     */
-                shape.addPoint(new Point(values[1], values[2]), true);
-                // Add the Polygon to the list
-                unsortedList.append(shape);
+                // Create a Polygon using the ShapeFactory and initialise its values
+                shape = ShapeFactory.createShape("POLYGON");
                 break;
             }
 
             case "c": // Circle
             {
                 // Create a Circle using the ShapeFactory
-                Circle shape = (Circle) ShapeFactory.createShape("CIRCLE");
-                // Set the centre and radius
-                shape.setCentre(new Point(values[0], values[1]));
-                shape.setRadius(values[2]);
-                // Add the Circle to the list
-                unsortedList.append(shape);
+                shape = ShapeFactory.createShape("CIRCLE");
                 break;
             }
             case "s": // Semicircle
             {
                 // Create a SemiCircle using the ShapeFactory
-                SemiCircle shape = (SemiCircle) ShapeFactory.createShape("SEMICIRCLE");
-                // Set the points that represent the SemiCircle
-                shape.setPoints(new Point(values[0], values[1]), new Point(values[2], values[3]));
-                // Add the SemiCircle to the list
-                unsortedList.append(shape);
+                shape = ShapeFactory.createShape("SEMICIRCLE");
                 break;
             }
+        }
+        if (shape != null)
+        {
+            // Initialise the points of the PlanarShape
+            shape.initialise(values);
+            // Add the Polygon to the list
+            unsortedList.append(shape);
         }
         // Return the remaining string
         return inData;

@@ -22,10 +22,21 @@ public class Circle extends PlanarShape
     }
 
     /**
+     * Initialise the points of the Circle
+     * @param values array of x and y coordinates that represent the points of the shape
+     */
+    public void initialise(double[] values)
+    {
+        // Set the centre and radius
+        this.setCentre(new Point(values[0], values[1]));
+        this.setRadius(values[2]);
+    }
+
+    /**
      * Set's the Centre Point of the circle
      * @param centre_ a Point object that represents the centre of the circle
      */
-    public void setCentre(Point centre_)
+    private void setCentre(Point centre_)
     {
         centre = centre_;
     }
@@ -34,7 +45,7 @@ public class Circle extends PlanarShape
      * Set's the Radius of the circle
      * @param radius_ a double that represents the radius of the circle
      */
-    public void setRadius(double radius_)
+    private void setRadius(double radius_)
     {
         radius = radius_;
     }
