@@ -109,35 +109,40 @@ public class PA2
         double[] values = interpretString(shapeString);
 
         PlanarShape shape = null;
-        // Check the first character in shapeString to determine the type of shape to create
-        switch (shapeString.substring(0, 1).toLowerCase())
+        try
         {
-            case "p": // Polygon
+            ShapeFactory sf = new ShapeFactory();
+            // Check the first character in shapeString to determine the type of shape to create
+            switch (shapeString.substring(0, 1).toLowerCase())
             {
-                // Create a Polygon using the ShapeFactory and initialise its values
-                shape = ShapeFactory.createShape("POLYGON");
-                break;
-            }
+                case "p": // Polygon
+                {
+                    // Create a Polygon using the ShapeFactory and initialise its values
+                    shape = sf.createShape("POLYGON");
+                    break;
+                }
 
-            case "c": // Circle
-            {
-                // Create a Circle using the ShapeFactory
-                shape = ShapeFactory.createShape("CIRCLE");
-                break;
+                case "c": // Circle
+                {
+                    // Create a Circle using the ShapeFactory
+                    shape = sf.createShape("CIRCLE");
+                    break;
+                }
+                case "s": // Semicircle
+                {
+                    // Create a SemiCircle using the ShapeFactory
+                    shape = sf.createShape("SEMICIRCLE");
+                    break;
+                }
             }
-            case "s": // Semicircle
-            {
-                // Create a SemiCircle using the ShapeFactory
-                shape = ShapeFactory.createShape("SEMICIRCLE");
-                break;
-            }
-        }
-        if (shape != null)
-        {
             // Initialise the points of the PlanarShape
             shape.initialise(values);
             // Add the Polygon to the list
             unsortedList.append(shape);
+        }
+        catch (Exception e)
+        {
+            System.err.print(e);
         }
         // Return the remaining string
         return inData;
@@ -214,8 +219,9 @@ public class PA2
 
     /**
      * Takes an array and resizes it according to the specified parameters
-     * @param oldArray the array to be resized
-     * @param oldSize the size of the old array
+     *
+     * @param oldArray  the array to be resized
+     * @param oldSize   the size of the old array
      * @param newLength the desired physical size of the new array
      * @return the new array
      * Precondition: None
@@ -235,6 +241,7 @@ public class PA2
 
     /**
      * Reads a text file and converts it into a string
+     *
      * @return a string read from the data in a text file with all lines combined into a single string
      * Precondition: filename has been declared
      * Postcondition: return value

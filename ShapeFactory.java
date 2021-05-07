@@ -15,7 +15,7 @@ public class ShapeFactory
      * @param shapeName defining the desired shape
      * @return a new shape
      */
-    public static PlanarShape createShape(String shapeName)
+    public PlanarShape createShape(String shapeName) throws Exception
     {
         // Switch depending on which shape was requested
         switch (shapeName.toLowerCase())
@@ -35,7 +35,7 @@ public class ShapeFactory
             }
             // Return null if no valid shape was requested
             default:
-                return null;
+                throw new Exception("No such shape");
         }
     }
 }
