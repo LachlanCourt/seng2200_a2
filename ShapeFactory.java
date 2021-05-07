@@ -7,7 +7,8 @@
  ****    its children
  *******************************************************************************/
 
-public class ShapeFactory
+
+public abstract class ShapeFactory
 {
     /**
      * Creates a shape specified by the parameter
