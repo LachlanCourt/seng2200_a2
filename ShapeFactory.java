@@ -8,7 +8,7 @@
  *******************************************************************************/
 
 
-public abstract class ShapeFactory
+public class ShapeFactory
 {
     /**
      * Creates a shape specified by the parameter
