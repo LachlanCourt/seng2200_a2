@@ -111,7 +111,7 @@ public class PA2
         PlanarShape shape = null;
         try
         {
-            ShapeFactory sf = new ShapeFactory();
+            ShapeFactory sf = new ShapeFactoryImplementation();
             // Check the first character in shapeString to determine the type of shape to create
             switch (shapeString.substring(0, 1).toLowerCase())
             {
