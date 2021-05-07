@@ -28,14 +28,39 @@ public class Polygon extends PlanarShape
     }
 
     /**
+     * Initialises the points of the Polygon
+     * @param values array of values starting with the number of points followed by x and y coordinates that represent
+     * the points of the shape
+     */
+    public void initialise(double[] values)
+    {
+        // Set the number of points that will be added to the Polygon object
+        points = new Point[(int)values[0] + 1];
+        /*
+         Loop through the values and add a point for every 2 values, ignoring the first value which is the
+         number of points
+         */
+        for (int i = 1; i < values.length - 1; i += 2)
+        {
+            // Pass false to indicate the point being added is not the last point
+            this.addPoint(new Point(values[i], values[i + 1]), false);
+        }
+        /*
+         Add the first point again, which will be used to calculate the area. Pass true to indicate it is
+         the last point
+         */
+        this.addPoint(new Point(values[1], values[2]), true);
+    }
+
+    /**
      * Adds a point to the array of points that represent the Polygon
      *
      * @param newPoint  a Point object that should be added to the end of the existing array of points
      * @param lastPoint a boolean indicating whether the Point being added is the last point thus completing the polygon
-     * Precondition: Points array must be initialised, either in the constructor or in setNumberPoints()
-     * Postcondition: newPoint is added to the points array
+     *                  Precondition: Points array must be initialised, either in the constructor or in setNumberPoints()
+     *                  Postcondition: newPoint is added to the points array
      */
-    public void addPoint(Point newPoint, boolean lastPoint)
+    private void addPoint(Point newPoint, boolean lastPoint)
     {
         // Add the new Point to the next spot in the points array
         points[pointsSize] = newPoint;
@@ -52,6 +77,7 @@ public class Polygon extends PlanarShape
 
     /**
      * Calculates the area of the polygon
+     *
      * @return the area of the polygon
      * Precondition: Points array must be initialised. If there are no points added then area will be 0
      * Postcondition: area variable indicates the area of the Polygon represented by the points in the points array
@@ -76,10 +102,11 @@ public class Polygon extends PlanarShape
 
     /**
      * Calculates the distance from the origin of the point closest to the origin
+     *
      * @return the distance from the origin from the point closest to the origin
      * Precondition: points array must have been initialised and cannot be empty
      * Postcondition: leastDistance variable will hold the value of the Euclidian distance to the from the point
-     *  closest to the origin
+     * closest to the origin
      */
     public double originDistance()
     {
@@ -97,16 +124,6 @@ public class Polygon extends PlanarShape
         return leastDistance;
     }
 
-    /**
-     * Initialises (or overwrites) the array of Points if the Polygon was initialised with the default constructor
-     * @param size_ the integer number of points that will be stored in the Polygon
-     * Precondition: None
-     * Postcondition: The points array will be initialised, or overwritten as an empty array if it already existed
-     */
-    public void setNumberPoints(int size_)
-    {
-        points = new Point[size_ + 1];
-    }
 
     /**
      * Outputs the Polygon as a string

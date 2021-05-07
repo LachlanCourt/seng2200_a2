@@ -24,13 +24,23 @@ public class SemiCircle extends PlanarShape
     }
 
     /**
+     * Initialise the points of the SemiCircle
+     * @param values array of x and y coordinates that represent the points of the shape
+     */
+    public void initialise(double[] values)
+    {
+        // Set the points that represent the SemiCircle
+        this.setPoints(new Point(values[0], values[1]), new Point(values[2], values[3]));
+    }
+
+    /**
      * Sets the points of a SemiCircle after it has been created
      * @param centre_ The centre of the polygon, imagining that it was a full circle
      * @param pointOnLine_ A point on the curved side of the polygon that is perpendicular to the straight side
      * Precondition: None
      * Postcondition: Points are set for the SemiCircle so that area calculations can be mdae
      */
-    public void setPoints(Point centre_, Point pointOnLine_)
+    private void setPoints(Point centre_, Point pointOnLine_)
     {
         centre = centre_;
         pointOnLine = pointOnLine_;
