@@ -108,7 +108,6 @@ public class PA2
         // Create an array of values that interpreted from shapeString
         double[] values = interpretString(shapeString);
 
-        PlanarShape shape = null;
         try
         {
             ShapeFactory sf = new ShapeFactory();
@@ -118,25 +117,23 @@ public class PA2
                 case "p": // Polygon
                 {
                     // Create a Polygon using the ShapeFactory and initialise its values
-                    shape = sf.create("POLYGON", values);
+                    unsortedList.append(sf.create("POLYGON", values));
                     break;
                 }
 
                 case "c": // Circle
                 {
                     // Create a Circle using the ShapeFactory
-                    shape = sf.create("CIRCLE", values);
+                    unsortedList.append(sf.create("CIRCLE", values));
                     break;
                 }
                 case "s": // Semicircle
                 {
                     // Create a SemiCircle using the ShapeFactory
-                    shape = sf.create("SEMICIRCLE", values);
+                    unsortedList.append(sf.create("SEMICIRCLE", values));
                     break;
                 }
             }
-            // Add the Polygon to the list
-            unsortedList.append(shape);
         }
         catch (Exception e)
         {
