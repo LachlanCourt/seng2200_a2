@@ -10,8 +10,8 @@ public class Node<T extends PlanarShape>
 {
     // Instance variables
     private T data;
-    private Node next;
-    private Node prev;
+    private Node<T> next;
+    private Node<T> prev;
 
     // Default constructor
     public Node()
@@ -44,7 +44,7 @@ public class Node<T extends PlanarShape>
     /**
      * @return the next Node in the LinkedList
      */
-    public Node getNext()
+    public Node<T> getNext()
     {
         return next;
     }
@@ -52,7 +52,7 @@ public class Node<T extends PlanarShape>
     /**
      * @param next_ takes a Node object and sets it as the next in the LinkedList
      */
-    public void setNext(Node next_)
+    public void setNext(Node<T> next_)
     {
         next = next_;
     }
@@ -60,7 +60,7 @@ public class Node<T extends PlanarShape>
     /**
      * @return the previous Node in the LinkedList
      */
-    public Node getPrev()
+    public Node<T> getPrev()
     {
         return prev;
     }
@@ -68,7 +68,7 @@ public class Node<T extends PlanarShape>
     /**
      * @param prev_ takes a Node object and sets it as the previous in the LinkedList
      */
-    public void setPrev(Node prev_)
+    public void setPrev(Node<T> prev_)
     {
         prev = prev_;
     }
