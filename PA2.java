@@ -118,25 +118,23 @@ public class PA2
                 case "p": // Polygon
                 {
                     // Create a Polygon using the ShapeFactory and initialise its values
-                    shape = sf.createShape("POLYGON");
+                    shape = sf.create("POLYGON", values);
                     break;
                 }
 
                 case "c": // Circle
                 {
                     // Create a Circle using the ShapeFactory
-                    shape = sf.createShape("CIRCLE");
+                    shape = sf.create("CIRCLE", values);
                     break;
                 }
                 case "s": // Semicircle
                 {
                     // Create a SemiCircle using the ShapeFactory
-                    shape = sf.createShape("SEMICIRCLE");
+                    shape = sf.create("SEMICIRCLE", values);
                     break;
                 }
             }
-            // Initialise the points of the PlanarShape
-            shape.initialise(values);
             // Add the Polygon to the list
             unsortedList.append(shape);
         }
