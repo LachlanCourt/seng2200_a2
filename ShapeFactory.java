@@ -39,7 +39,7 @@ public class ShapeFactory implements Factory
             // Throw an exception if no valid shape was requested
             default:
             {
-                throw new Exception("No such shape");
+                throw new Exception("No such shape: " + type);
             }
         }
         // Initialise the points of the PlanarShape
